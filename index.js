@@ -4,6 +4,7 @@ const resetButton = document.getElementById('reset');
 const messages = document.getElementsByClassName('message');
 const tooHighMessage = document.getElementById('too-high');
 const tooLowMessage = document.getElementById('too-low');
+const wrongEntry = document.getElementById('wrong-entry')
 const maxGuessesMessage = document.getElementById('max-guesses');
 const numberOfGuessesMessage = document.getElementById('number-of-guesses');
 const correctMessage = document.getElementById('correct');
@@ -22,62 +23,78 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+//Fixed bug tenth Redifinding function hideAllMessages
+//Fixed bug ninth per instructions, need to define function
+//Fixed seventh bug the sign [] dosen't apply with elementIndex
+//Fixed sixth bug element index
+//Fixed fifth bug function not defined
+function hideAllMessages() {
+  for (let i=0; i < messages.length; i++) {
+    messages[i].style.display = 'none';
+  } 
+}
+
+//Fixed bug 11th to repositioninh function after calling hideAllMessages
 function checkGuess() {
+  hideAllMessages();
   // Get value from guess input element
   const guess = parseInt(guessInput.value, 10);
-  attempts = attempts + 1;
-
-  hideAllMessages();
+  //Fixed bug 12th, could be writed as short form attempts += 1
+  attempts += 1;
+  //Fixed bug 14th to reset the game after guessing and on each tryout
+  resetButton.style.display = ''
+  //Fixed bug 13th to define range of numbers, created message
+  if (guess < 1 || guess > 99) {
+    wrongEntry.style.display = '';
+    return;
+  
+  }
 
   if (guess === targetNumber) {
     numberOfGuessesMessage.style.display = '';
     numberOfGuessesMessage.innerHTML = `You made ${attempts} guesses`;
-
     correctMessage.style.display = '';
 
     submitButton.disabled = true;
     guessInput.disabled = true;
   }
-
+// Fixed eight bug,tooLowMessage repited, should be tooHighMessage
   if (guess !== targetNumber) {
     if (guess < targetNumber) {
       tooLowMessage.style.display = '';
     } else {
-      tooLowMessage.style.display = '';
+      tooHighMessage.style.display = '';
     }
 
     const remainingAttempts = maxNumberOfAttempts - attempts;
 
     numberOfGuessesMessage.style.display = '';
     numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesses remaining`;
-  }
 
-  if (attempts ==== maxNumberOfAttempts) {
+  //Fixed first bug, too many equal signs
+  if (attempts === maxNumberOfAttempts) {
     submitButton.disabled = true;
     guessInput.disabled = true;
-  }
+    resetButton.style.display = '';
+    }
+  }  
 
   guessInput.value = '';
-
-  resetButton.style.display = '';
 }
-
-function hideAllMessages() {
-  for (let elementIndex = 0; elementIndex <= messages.length; elementIndex++) {
-    messages[elementIndex].style.display = 'none';
-  }
-}
-
-funtion setup() {
+  
+//Fixed second bug word function misspelled 
+function setup() {
   // Get random number
   targetNumber = getRandomNumber(1, 100);
   console.log(`target number: ${targetNumber}`);
 
+//Fixed third bug, number of attempts should be 5 or less
   // Reset number of attempts
-  maxNumberOfAttempts = 0;
+  attempts = 0;
 
+//Fixed fourth bug changed disabeld to disabled on sub button
   // Enable the input and submit button
-  submitButton.disabeld = false;
+  submitButton.disabled = false;
   guessInput.disabled = false;
 
   hideAllMessages();
