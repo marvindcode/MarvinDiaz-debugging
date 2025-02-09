@@ -41,10 +41,13 @@ function checkGuess() {
   const guess = parseInt(guessInput.value, 10);
   //Fixed bug 12th, could be writed as short form attempts += 1
   attempts += 1;
+  //Fixed bug 14th to reset the game after guessing and on each tryout
+  resetButton.style.display = ''
   //Fixed bug 13th to define range of numbers, created message
   if (guess < 1 || guess > 99) {
     wrongEntry.style.display = '';
     return;
+  
   }
 
   if (guess === targetNumber) {
