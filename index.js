@@ -37,18 +37,20 @@ function hideAllMessages() {
 //Fixed bug 11th to repositioninh function after calling hideAllMessages
 function checkGuess() {
   hideAllMessages();
+
   // Get value from guess input element
   const guess = parseInt(guessInput.value, 10);
-  //Fixed bug 12th, could be writed as short form attempts += 1
+  
+  //Fixed bug 13th to define range of numbers, created message
+  if (guess < 1 || guess > 99 || guess < 0) {
+    wrongEntry.style.display = '';
+    return;
+  }
+
+  //Fixed bug 12th, could be writed as short form attempts +=   
   attempts += 1;
   //Fixed bug 14th to reset the game after guessing and on each tryout
   resetButton.style.display = ''
-  //Fixed bug 13th to define range of numbers, created message
-  if (guess < 1 || guess > 99) {
-    wrongEntry.style.display = '';
-    return;
-  
-  }
 
   if (guess === targetNumber) {
     numberOfGuessesMessage.style.display = '';
@@ -57,10 +59,11 @@ function checkGuess() {
 
     submitButton.disabled = true;
     guessInput.disabled = true;
+    return;
   }
-// Fixed eight bug,tooLowMessage repited, should be tooHighMessage
-  if (guess !== targetNumber) {
-    if (guess < targetNumber) {
+  //Fixed 15th bug, duplicated if statement, removed if(guess !== target number)
+  // Fixed eight bug,tooLowMessage repited, should be tooHighMessage
+  if (guess < targetNumber) {
       tooLowMessage.style.display = '';
     } else {
       tooHighMessage.style.display = '';
@@ -73,10 +76,11 @@ function checkGuess() {
 
   //Fixed first bug, too many equal signs
   if (attempts === maxNumberOfAttempts) {
-    submitButton.disabled = true;
+    // submitButton.disabled = true;
+    maxGuessesMessage.style.display = '';
     guessInput.disabled = true;
     resetButton.style.display = '';
-    }
+    
   }  
 
   guessInput.value = '';
